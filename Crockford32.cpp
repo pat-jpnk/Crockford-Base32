@@ -18,11 +18,11 @@ int main() {
   **/
 
 
-  
-  std::string c = "a";
-  
+  std::string a = "a";
+  std::string c = "aB";
+  /**
   encode(c);
-  
+  **/
 
 
   /**
@@ -33,7 +33,10 @@ int main() {
   **/
 
  // encode("A");
+  
+  std::string res = encode(c);
 
+  std::cout << res << std::endl;
   return 0;
 }
 
@@ -63,44 +66,53 @@ std::string char_to_bin(char str) {
 
 
 std::string encode(std::string input) {
-
   short len = input.length();
   char c;
-  std::string result = "";                    
-  std::string bin;
-  std::string char_result; 
+  short bits_len;
+  short bits_start = 0;
+  //short bits_end = 5;
 
-  for(short j = 0; j < len; j++) {                // 'j < len' => ignore '\0' character at end of std::string
+  std::string result = "";
+  std::string bin = "";
+  std::string bin_cache = "";
+  
+
+  for(short j = 0; j < len; j++) {
     c = input[j];
-    bin = char_to_bin(c);
-    augment_bits(&bin);
-    
- //   std::cout << bin << std::endl;              -> 10 bit binary
- //   std::cout << bin.size() << std::endl;
-    
-    char_result = encode_char(bin);
-    result += char_result;
+    bin_cache = char_to_bin(c);
+    bin += bin_cache;
   }
+
+  augment_bits(&bin);
+  bits_len = bin.length();
   
-  std::cout << result << std::endl;
-
-  exit(0);
-
-  return result; 
+  std::cout << bin << std::endl;
   
-
-  /** 
+  //exit(0);
   
-  - get char
-  - to bin 
-  - augment to multiple of 5 
+  while(bits_start < bits_len) {
+    //std::cout << bits_start << " : " << bits_end << std::endl;
 
-  - get ascii version of binary
+    std::string substr_cache = bin.substr(bits_start, 5);
+    const char* sub = &substr_cache[0];
+    
+    std::cout << "this: " << substr_cache << std::endl;
 
-  - add characters to result
+    result += encode_symbols[strtoull(sub, NULL, 2)];
 
-  **/
+    //std::cout << rs << std::endl;
+    
+    //exit(0);
+    bits_start += 5;
+    //bits_end += 5;
+    /**    
+    std::string tre = bin.substr(15,20);
+    std::cout << tre << std::endl;
+    exit(0);
+    **/
+  }
 
+  return result;
 }
 
 // takes 10 bit binary chunk as input
