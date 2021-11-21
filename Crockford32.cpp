@@ -18,7 +18,7 @@ int main() {
   **/
 
 
-  std::string a = "a";
+  std::string a = "0";
   std::string c = "aB";
   /**
   encode(c);
@@ -35,7 +35,6 @@ int main() {
  // encode("A");
   
   std::string res = encode(c);
-
   std::cout << res << std::endl;
   return 0;
 }
@@ -57,8 +56,10 @@ std::string char_to_bin(char str) {
 
     val /= 2;
   }
-
-  result.push_back('0');
+  
+  while(result.length() < 8) {
+    result.push_back('0');
+  }
   reverse(result.begin(), result.end()); 
   return result;
 
@@ -87,6 +88,7 @@ std::string encode(std::string input) {
   bits_len = bin.length();
   
   std::cout << bin << std::endl;
+  std::cout << bits_len << std::endl;
   
   //exit(0);
   
