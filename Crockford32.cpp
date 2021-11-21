@@ -18,7 +18,7 @@ int main() {
   **/
 
 
-  std::string a = "0";
+  std::string a = "Patrick";
   std::string c = "aB";
   /**
   encode(c);
@@ -34,7 +34,7 @@ int main() {
 
  // encode("A");
   
-  std::string res = encode(c);
+  std::string res = encode(a);
   std::cout << res << std::endl;
   return 0;
 }
