@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
-#include "Crockford32.hpp"
+#include "Crockford32.h"
 #include <bits/stdc++.h>
 
-int main(void) {
+int main() {
 
   //std::cout << encode_symbols[24] << std::endl; 
 
@@ -36,7 +36,6 @@ int main(void) {
 
   return 0;
 }
-
 
 // 7-bit ascii -> 8-bit binary 
 
@@ -76,14 +75,17 @@ std::string encode(std::string input) {
     bin = char_to_bin(c);
     augment_bits(&bin);
     
-    std::cout << bin << std::endl;
+ //   std::cout << bin << std::endl;              -> 10 bit binary
  //   std::cout << bin.size() << std::endl;
-    exit(0);
     
     char_result = encode_char(bin);
     result += char_result;
   }
   
+  std::cout << result << std::endl;
+
+  exit(0);
+
   return result; 
   
 
@@ -101,12 +103,40 @@ std::string encode(std::string input) {
 
 }
 
+// takes 10 bit binary chunk as input
+
+/** 
+
+-> convert 5-bit chunks from binary to decimal 
+-> look up encode values & add to result 
+
+**/
 
 std::string encode_char(std::string bits) {
   std::string result = "";
+ 
+  std::string p_1 = bits.substr(0,5);
+  std::string p_2 = bits.substr(5,10);
   
 
+  const char* n1 = &p_1[0];
+  const char* n2 = &p_2[0];
 
+  unsigned long long int dec1 = strtoull(n1, NULL, 2);
+  unsigned long long int dec2 = strtoull(n2, NULL, 2);
+
+  /**
+  std::cout << bits << std::endl;
+  std::cout << dec1 << std::endl;
+  std::cout << dec2 << std::endl;
+  **/
+
+  //std::cout << bits << std::endl;
+  //std::cout << p_1 << std::endl;
+  //std::cout << p_2 << std::endl;
+  
+  result += encode_symbols[dec1];
+  result += encode_symbols[dec2];
 
   return result;
 }

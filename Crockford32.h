@@ -1,5 +1,7 @@
 #include <string>
 
+#pragma once
+
 std::string char_to_bin(char str);
 
 std::string encode(std::string input);
@@ -15,6 +17,9 @@ std::string add_checksum(std::string input);
 void augment_bits(std::string* input);
 
 bool validate_checksum(std::string input);
+
+extern char encode_symbols[32];
+
 
 char encode_symbols[32] = {
 
