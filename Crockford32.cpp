@@ -6,6 +6,10 @@
 
 int main() {
   
+  short d = decode_values['C'];
+
+  std::cout << d << std::endl;
+
   /**
 
   //std::cout << encode_symbols[24] << std::endl; 
@@ -85,7 +89,7 @@ std::string encode(std::string input) {
     bin += bin_cache;
   }
 
-  augment_bits(&bin);
+  augment_encode_bits(&bin);
   bits_len = bin.length();
   
   while(bits_start < bits_len) {
@@ -100,14 +104,32 @@ std::string encode(std::string input) {
 
 
 std::string decode(std::string input) {
-  return input; // delete and implement 
+  short len = input.length();
+  char c;
+  std::string bin = "";
+
+  for(short k = 0; k < len; k++) {
+    c = input[k];
+    //bin += encode();
+  }
+
+  return "";
+
 }
 
-void augment_bits(std::string* input) {
+
+
+void augment_encode_bits(std::string* input) {
   while((input->length() % 5) != 0) {
     input->push_back('0');
   }
 }
+
+void augment_decode_bits(std::string* input) {
+  while((input->length() % 5) != 0) {
+    input->insert(0,"0");
+  }
+};
 
 std::string create_checksum(std::string input) {
   return input; // delete and implement
