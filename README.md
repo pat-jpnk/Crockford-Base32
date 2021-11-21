@@ -2,9 +2,9 @@
 
 some nice resources:
 
-http://www.crockford.com/base32.html
-https://www.youtube.com/watch?v=aUdKd0IFl34
-https://www.asciitable.com/
+http://www.crockford.com/base32.html 
+https://www.youtube.com/watch?v=aUdKd0IFl34 
+https://www.asciitable.com/ 
 
 
 Trying to implement a character encoding, read about this one in the book ""
