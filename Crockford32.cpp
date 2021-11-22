@@ -76,12 +76,7 @@ std::string encode(std::string input, bool checksum) {
   std::string bin_cache = "";
   
   if(checksum) {
-
-    check_sum = create_checksum(input);
-    
-    /**
-  
-    **/
+    check_sum = create_checksum(input);  
   }
 
 
@@ -138,7 +133,9 @@ std::string decode(std::string input) {
   short bin_len = bin.length(); 
   short bin_start = 0;
   short ds;
-
+  short remain;
+  char ret;
+  
   while(bin_start < bin_len) {
     
     if((bin_len - bin_start) >= 8) {
@@ -148,7 +145,7 @@ std::string decode(std::string input) {
       bin_start += 8;
 
     } else {
-      short remain = (bin_len - bin_start);
+      remain = (bin_len - bin_start);
       substr_cache = bin.substr(bin_start, remain);
       ds = std::stoul(substr_cache, NULL, 2);
 
@@ -156,7 +153,7 @@ std::string decode(std::string input) {
         break;
       }
 
-      char ret = (char) ds;
+      ret = (char) ds;
       result.append(1, (char) ds);
       bin_start += remain; 
     }
