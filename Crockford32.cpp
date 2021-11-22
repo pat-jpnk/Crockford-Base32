@@ -121,10 +121,6 @@ std::string decode(std::string input) {
   char check_sum = input[input.length() - 1];
   input.pop_back();
   
-  //std::cout << check_sum << std::endl;
-
-  //exit(0);
-
   short len = input.length();
   char c;
   short decode_val;
@@ -177,11 +173,6 @@ std::string decode(std::string input) {
   }
  
   
- //std::cout << result << std::endl;
- //std::cout << check_sum << std::endl;
- //exit(0);
- // return result;
- 
   if(validate_checksum(result,check_sum)) {
     return result;
   } else {

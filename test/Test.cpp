@@ -17,6 +17,7 @@ std::string seven = "85146A";
 std::string eight = "D1JGB";
 
 char nine = 'Q';
+char ten = '$';
 
 TEST_CASE("Testing the encode method") {
   CHECK(encode(one) == "C4Q");
@@ -35,4 +36,5 @@ TEST_CASE("Testing the decode method") {
 
 TEST_CASE("Testing to checksum validation method") {
   CHECK(validate_checksum(one,nine) == true);
+  CHECK(validate_checksum(two, ten) == true);
 }
