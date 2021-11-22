@@ -4,21 +4,28 @@
 #include <bits/stdc++.h>
 
 
-/**int main() {
+//int main() {
 
-  std::string rr = "a";
-  char c = 'Q';
+//  std::string rr = "a";
+  
+//  char c = 'Q';
+  /**
   char d = create_checksum(rr);
 
   std::cout << d << std::endl;
-
-  //bool res = validate_checksum(rr,c);
-  //std::cout << res << std::endl;  
-
-  /**std::string d = encode(rr);
-  std::cout << d << std::endl;
   **/
-  //return 0;
+
+  //bool res = validate_checksum(rr,c);  // "a", 'Q'
+  //std::cout << res << std::endl;  
+  
+  /**
+  
+  std::string re = "C4Q";
+  
+  std::string d = decode(re);
+  std::cout << d << std::endl;
+  
+  return 0; **/
 //}
 
 
@@ -100,7 +107,7 @@ std::string encode(std::string input, bool checksum) {
     result += encode_symbols[strtoull(sub, NULL, 2)];
     bits_start += 5;
   }
-   
+  
   if(checksum) {
     result.append(1,check_sum);
   }
@@ -110,6 +117,14 @@ std::string encode(std::string input, bool checksum) {
 
 
 std::string decode(std::string input) {
+
+  char check_sum = input[input.length() - 1];
+  input.pop_back();
+  
+  //std::cout << check_sum << std::endl;
+
+  //exit(0);
+
   short len = input.length();
   char c;
   short decode_val;
@@ -160,8 +175,20 @@ std::string decode(std::string input) {
       bin_start += remain; 
     }
   }
+ 
+  
+ //std::cout << result << std::endl;
+ //std::cout << check_sum << std::endl;
+ //exit(0);
+ // return result;
+ 
+  if(validate_checksum(result,check_sum)) {
+    return result;
+  } else {
+    result = "";
+    return result;
+  }
 
-  return result;
 }
 
 void augment_encode_bits(std::string* input) {
