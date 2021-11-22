@@ -24,3 +24,11 @@ so I knew that was wrong, too bad
 I also realized that you have to add more than one '0' to some
 binary representations to get an 8-bit value to work with when the encoding
 of '0' was wrong.
+
+# requirements 
+
+- all letters in the encoding output must be capitalized, therefore
+  only letters that are capitalized are valid input to the decoding 
+  method
+
+- checksum adding is automatically added
