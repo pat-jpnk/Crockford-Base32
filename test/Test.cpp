@@ -10,6 +10,7 @@ std::string one = "a";
 std::string two = "aB";
 std::string three = "Patrick";
 std::string four = "0";
+std::string twelve = "mike";
 
 std::string five = "C4Q";
 std::string six = "C510$";
@@ -18,6 +19,7 @@ std::string eight = "D1JGB";
 
 char nine = 'Q';
 char ten = '$';
+char eleven = '2';
 
 TEST_CASE("Testing the encode method") {
   CHECK(encode(one) == "C4Q");
@@ -26,6 +28,8 @@ TEST_CASE("Testing the encode method") {
   CHECK(encode(four) == "60B");
 }
 
+
+// a => C4Q 
 
 TEST_CASE("Testing the decode method") {
   CHECK(decode(five) == "a"); 
@@ -37,4 +41,5 @@ TEST_CASE("Testing the decode method") {
 TEST_CASE("Testing to checksum validation method") {
   CHECK(validate_checksum(one,nine) == true);
   CHECK(validate_checksum(two, ten) == true);
+  CHECK(validate_checksum(twelve, eleven) == true);
 }
