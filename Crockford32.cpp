@@ -74,14 +74,14 @@ std::string encode(std::string input, bool checksum) {
   std::string result = "";
   std::string bin = "";
   std::string bin_cache = "";
-  std::string input_bin = "";
   
   if(checksum) {
-    for(short i = 0; i < len; i++) {
-      input_bin += char_to_bin(input[i]);
-    }
+
+    check_sum = create_checksum(input);
     
-    check_sum = encode_symbols[(std::stoul(input_bin, NULL, 2) % 37)];
+    /**
+  
+    **/
   }
 
 
@@ -179,10 +179,15 @@ void augment_decode_bits(std::string* input) {
   }
 };
 
-std::string create_checksum(std::string input) {
-  return input; // delete and implement
+char create_checksum(std::string input) {
+  std::string input_bin = "";
+  short len = input.length();
+  for(short i = 0; i < len; i++) {
+    input_bin += char_to_bin(input[i]);
+  } 
+  return encode_symbols[(std::stoul(input_bin, NULL, 2) % 37)];
 }
 
-bool validate_checksum(std::string input) {
+bool validate_checksum(std::string input, char checksum) {
  return false;
 }
