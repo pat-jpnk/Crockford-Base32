@@ -10,8 +10,13 @@ std::string decode(std::string input);
 char create_checksum(std::string input);
 void augment_encode_bits(std::string* input);
 void augment_decode_bits(std::string* input);
-bool validate_checksum(std::string input);
-inline char encode_symbols[32] = {
+bool validate_checksum(std::string input, char checksum);
+
+
+// 0 - 31  => encoding 
+// 32 - 36 => checksum
+
+inline char encode_symbols[37] = {
 
 '0', '1', '2', '3', 
 
@@ -27,7 +32,11 @@ inline char encode_symbols[32] = {
 
 'R', 'S', 'T', 'V', 
 
-'W', 'X', 'Y', 'Z'
+'W', 'X', 'Y', 'Z',
+
+'*', '~', '$', '=',
+
+'U'
 
 };
 

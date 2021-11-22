@@ -16,25 +16,23 @@ std::string six = "C510";
 std::string seven = "85146";
 std::string eight = "D1JG";
 
+char nine = 'Q';
+
 TEST_CASE("Testing the encode method") {
-  CHECK(encode(one) == "C4");
-  CHECK(encode(two) == "C510");
-  CHECK(encode(three) == "A1GQ8WK9CDNG");
-  CHECK(encode(four) == "60");
+  CHECK(encode(one) == "C4Q");
+  CHECK(encode(two) == "C510$");
+  //CHECK(encode(three) == "A1GQ8WK9CDNG"); add checksum characters 
+  //CHECK(encode(four) == "60");
 }
 
-//std::string abc = decode(five);
-//std::cout << abc << std::endl;
-
-
+/**
 TEST_CASE("Testing the decode method") {
   CHECK(decode(five) == "a"); 
   CHECK(decode(six) == "aB");
   CHECK(decode(seven) == "ABC");
   CHECK(decode(eight) == "he");
-}
-
-
-/**TEST_CASE("Testing to checksum validation method") {
-  CHECK(validate_checksum(one) == true);
 }**/
+
+TEST_CASE("Testing to checksum validation method") {
+  CHECK(validate_checksum(one,nine) == true);
+}

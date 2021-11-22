@@ -4,14 +4,22 @@
 #include <bits/stdc++.h>
 
 
-int main() {
+/**int main() {
 
   std::string rr = "a";
-  std::string d = encode(rr);
+  char c = 'Q';
+  char d = create_checksum(rr);
+
   std::cout << d << std::endl;
-  
-  return 0;
-}
+
+  //bool res = validate_checksum(rr,c);
+  //std::cout << res << std::endl;  
+
+  /**std::string d = encode(rr);
+  std::cout << d << std::endl;
+  **/
+  //return 0;
+//}
 
 
 // 7-bit ascii -> 8-bit binary 
@@ -19,9 +27,10 @@ std::string char_to_bin(char str) {
   
   std::string result = ""; 
   short val = short(str);
+  short step;
   
   while(val > 0) {       
-    short step = val % 2;
+    step = val % 2;
 
     if(step) {
       result.push_back('1');
@@ -36,10 +45,8 @@ std::string char_to_bin(char str) {
     result.push_back('0');
   }
 
-  reverse(result.begin(), result.end()); 
-  
+  reverse(result.begin(), result.end());  
   return result;
-
 }
 
 // return 5-bit binary
@@ -58,7 +65,6 @@ std::string char_to_bin(short val) {
   }
 
   reverse(result.begin(),result.end());
-
   return result;
 }
 
@@ -70,7 +76,6 @@ std::string encode(std::string input, bool checksum) {
   short bits_len;
   short bits_start = 0;
 
-
   std::string result = "";
   std::string bin = "";
   std::string bin_cache = "";
@@ -78,7 +83,6 @@ std::string encode(std::string input, bool checksum) {
   if(checksum) {
     check_sum = create_checksum(input);  
   }
-
 
   for(short j = 0; j < len; j++) {
     c = input[j];
@@ -125,11 +129,9 @@ std::string decode(std::string input) {
     } else {
       bin_cache = "00000";
       bin += bin_cache;
-    }
-    
+    }    
   }
   
-   
   short bin_len = bin.length(); 
   short bin_start = 0;
   short ds;
@@ -162,8 +164,6 @@ std::string decode(std::string input) {
   return result;
 }
 
-
-
 void augment_encode_bits(std::string* input) {
   while((input->length() % 5) != 0) {
     input->push_back('0');
@@ -181,10 +181,14 @@ char create_checksum(std::string input) {
   short len = input.length();
   for(short i = 0; i < len; i++) {
     input_bin += char_to_bin(input[i]);
-  } 
+  }
   return encode_symbols[(std::stoul(input_bin, NULL, 2) % 37)];
 }
 
 bool validate_checksum(std::string input, char checksum) {
- return false;
+  if(create_checksum(input) == checksum) {
+    return true;
+  } else {
+    return false;
+  }
 }
