@@ -16,4 +16,4 @@ Trying to implement a character encoding, read about this one in the book
   only letters that are capitalized are valid input to the decoding 
   method
 
-- checksum adding is automatically added
+- checksum is automatically added and checked
