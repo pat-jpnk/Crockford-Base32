@@ -6,7 +6,7 @@
 std::string char_to_bin(char str);
 std::string char_to_bin(short val);
 std::string encode(std::string input, bool checksum = true);
-std::string decode(std::string input);
+std::string decode(std::string input, bool checksum = true);
 char create_checksum(std::string input);
 void augment_encode_bits(std::string* input);
 void augment_decode_bits(std::string* input);

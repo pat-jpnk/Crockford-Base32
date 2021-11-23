@@ -4,29 +4,14 @@
 #include <bits/stdc++.h>
 
 
-//int main() {
+int main() {
 
-//  std::string rr = "a";
-  
-//  char c = 'Q';
-  /**
-  char d = create_checksum(rr);
+  std::string rr = "Liebe";
+  std::string res = encode(rr);
+  std::cout << res << std::endl;
 
-  std::cout << d << std::endl;
-  **/
-
-  //bool res = validate_checksum(rr,c);  // "a", 'Q'
-  //std::cout << res << std::endl;  
-  
-  /**
-  
-  std::string re = "C4Q";
-  
-  std::string d = decode(re);
-  std::cout << d << std::endl;
-  
-  return 0; **/
-//}
+  return 0;
+}
 
 
 // 7-bit ascii -> 8-bit binary 
@@ -78,7 +63,7 @@ std::string char_to_bin(short val) {
 std::string encode(std::string input, bool checksum) {
 
   char check_sum;
-  short len = input.length();
+  short len = input.length(); 
   char c;
   short bits_len;
   short bits_start = 0;
@@ -116,10 +101,14 @@ std::string encode(std::string input, bool checksum) {
 }
 
 
-std::string decode(std::string input) {
+std::string decode(std::string input, bool checksum) {
+   
+  char check_sum;
 
-  char check_sum = input[input.length() - 1];
-  input.pop_back();
+  if(checksum) {
+    check_sum = input[input.length() - 1];
+    input.pop_back();
+  }
   
   short len = input.length();
   char c;
@@ -134,7 +123,7 @@ std::string decode(std::string input) {
     
     if(c != '0') {
       decode_val = decode_symbols[c];
-      bin_cache = char_to_bin(decode_val); // return 5 bit binary     
+      bin_cache = char_to_bin(decode_val); // return 5-bit binary     
       augment_decode_bits(&bin_cache);
       bin += bin_cache;
     } else {
@@ -172,14 +161,16 @@ std::string decode(std::string input) {
     }
   }
  
-  
-  if(validate_checksum(result,check_sum)) {
-    return result;
-  } else {
-    result = "";
-    return result;
+  if(checksum) { 
+    if(validate_checksum(result,check_sum)) {
+      return result;
+    } else {
+      result = "";
+      return result;
+    }
   }
 
+  return result;
 }
 
 void augment_encode_bits(std::string* input) {
