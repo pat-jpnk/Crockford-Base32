@@ -9,7 +9,10 @@ int main() {
   std::string rr = "Liebe";
   std::string res = encode(rr);
   std::cout << res << std::endl;
-
+  
+  std::string tt = decode(res);
+  std::cout << tt << std::endl;
+  
   return 0;
 }
 
@@ -34,6 +37,7 @@ std::string char_to_bin(char str) {
   }
   
   while(result.length() < 8) {
+
     result.push_back('0');
   }
 
@@ -72,9 +76,9 @@ std::string encode(std::string input, bool checksum) {
   std::string bin = "";
   std::string bin_cache = "";
   
-  if(checksum) {
-    check_sum = create_checksum(input);  
-  }
+  //if(checksum) {
+  //  check_sum = create_checksum(input);  
+  //}
 
   for(short j = 0; j < len; j++) {
     c = input[j];
@@ -94,6 +98,7 @@ std::string encode(std::string input, bool checksum) {
   }
   
   if(checksum) {
+    check_sum = create_checksum(input);
     result.append(1,check_sum);
   }
 
@@ -123,7 +128,7 @@ std::string decode(std::string input, bool checksum) {
     
     if(c != '0') {
       decode_val = decode_symbols[c];
-      bin_cache = char_to_bin(decode_val); // return 5-bit binary     
+      bin_cache = char_to_bin(decode_val); // return 5-bit binary  
       augment_decode_bits(&bin_cache);
       bin += bin_cache;
     } else {
