@@ -76,9 +76,6 @@ std::string encode(std::string input, bool checksum) {
   std::string bin = "";
   std::string bin_cache = "";
   
-  //if(checksum) {
-  //  check_sum = create_checksum(input);  
-  //}
 
   for(short j = 0; j < len; j++) {
     c = input[j];
@@ -139,7 +136,7 @@ std::string decode(std::string input, bool checksum) {
   
   short bin_len = bin.length(); 
   short bin_start = 0;
-  short ds;
+  unsigned long ds;
   short remain;
   char ret;
   
