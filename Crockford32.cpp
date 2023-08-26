@@ -40,9 +40,9 @@ int main() {
 
   //std::cout << encode_symbols[13] << std::endl;
 
-  std::cout << create_checksum("tree") << std::endl;  // G
+      //  std::cout << create_checksum("tree") << std::endl;  // G
 
-  std::cout << create_checksum2("tree") << std::endl;  // G
+      // std::cout << create_checksum2("tree") << std::endl;  // G
 
 
 
@@ -69,16 +69,18 @@ int main() {
   
   */
 
+//9HMPARK59N6Q6S3KC5J62S0 =
 
+//9HMPARK59N6Q6S3KC5J62S0 E
 
-  //std::string rr = "LiebeMMsdsadad";
+  std::string rr = "LiebeMMsdsadad";
       //std::string rr = "Auto4r";
   
-  //std::string res = encode(rr, false);  
+  std::string res = encode(rr, true);  
                                                                         // 9HMPARK59N6Q6S3KC5J62S0
     // std::string res2 = encode(rr, true); // 85TQ8VSME8H                   // works with 'false' => 9HMPARK59N6Q6S3KC5J62S0
                                                                         // true => 9HMPARK59N6Q6S3KC5J62S0= (works not)
-  //std::cout << res << std::endl;
+  std::cout << res << std::endl;
 
       //std::cout << res2 << std::endl;
 
@@ -297,7 +299,7 @@ void augment_decode_bits(std::string* input) {
 };
 
 // error for wrong symbol
-char create_checksum(std::string input) {
+char create_checksum2(std::string input) {
   //std::cout << "input: " << input << std::endl;
 
   std::string input_bin = "";
@@ -320,11 +322,12 @@ char create_checksum(std::string input) {
 }
 
 
-char create_checksum2(std::string input) {
+char create_checksum(std::string input) {
 
   std::vector<binary_segment> segments;
-  std::vector<unsigned long long> values;
+  std::vector<long double> values;
   int covered = 0;
+  
 
   // count binary digits 
 
@@ -335,36 +338,57 @@ char create_checksum2(std::string input) {
   }
 
   int binary_len = input_bin.length();
-
+  int remaining = binary_len;
 
   std::cout << "bin: " << input_bin << std::endl;
 
+  std::cout << "bin: " << binary_len << std::endl;
 
   //int len = input.length();
 
   // divide into (64, 32, 16, 8) increments
 
+  std::cout << " " << std::endl;
+
+
   while(covered < binary_len) {
 
     binary_segment seg;
 
-    if (binary_len >= eight_bytes) {
+    if (remaining >= eight_bytes) {
       seg.size = eight_bytes;
       seg.index = covered;
       seg.largest_exponent = binary_len - covered - 1;
-    } else if (binary_len >= four_bytes) {
+
+
+      std::cout << "--CALC-- 64" << std::endl;
+      std::cout << "covered: " << covered << std::endl;
+      std::cout << "largest expo: " << seg.largest_exponent<< std::endl;
+      std::cout << "index: " << seg.index<< std::endl;
+      std::cout << " " << std::endl;
+
+    } else if (remaining >=  four_bytes) {
       seg.size = four_bytes;
       seg.index = covered;
       seg.largest_exponent = binary_len - covered - 1;
 
-      std::cout << "--CALC--" << std::endl;
+      std::cout << "--CALC-- 32" << std::endl;
       std::cout << "covered: " << covered << std::endl;
       std::cout << "largest expo: " << seg.largest_exponent<< std::endl;
+      std::cout << "index: " << seg.index<< std::endl;
+      std::cout << " " << std::endl;
 
-    } else if (binary_len >= two_bytes) {
+    } else if (remaining >= two_bytes) {
       seg.size = two_bytes;
       seg.index = covered;
       seg.largest_exponent = binary_len - covered - 1;
+
+      std::cout << "--CALC-- 16" << std::endl;
+      std::cout << "covered: " << covered << std::endl;
+      std::cout << "largest expo: " << seg.largest_exponent<< std::endl;
+      std::cout << "index: " << seg.index<< std::endl;
+      std::cout << " " << std::endl;
+
     } else {
       seg.size = one_byte;
       seg.index = covered;
@@ -373,13 +397,16 @@ char create_checksum2(std::string input) {
 
     covered += seg.size;
     segments.push_back(seg);
+    remaining = binary_len - covered;
+    std::cout << "rem: : " << remaining << std::endl;
 
   }
 
 //  std::cout << input_bin << std::endl;
 
-
   // calculate values 
+
+//  long double bigval = 0;
 
   for (auto& s : segments) {
 
@@ -387,8 +414,15 @@ char create_checksum2(std::string input) {
     double exp = (double) s.largest_exponent;
     int index = s.index;
 
-
+/*
+    std::cout << " " << std::endl;
     std::cout << "size: " << s.size << std::endl;
+    std::cout << "exp: " << exp << std::endl;
+    std::cout << "index: " << index << std::endl;
+
+    std::cout << " " << std::endl;
+*/
+
 
     for(int j = s.size; j > 0; j--) {
       char c = input_bin.at(index);
@@ -396,36 +430,74 @@ char create_checksum2(std::string input) {
       if (i == 1){
         val += (std::pow(2, exp));
       }
-      //std::cout << "exp: " << exp << std::endl;
+
+/*
+      std::cout << "exp: " << exp << std::endl;
+      std::cout << "index: " << index << std::endl;
+      std::cout << std::fixed << "val: " << val << std::endl;
+      
+*/
+
       index++;
       exp--;
 
-
+ 
       //std::cout << "exp: " << exp << std::endl;
-      std::cout << "val: " << val << std::endl;
+      //std::cout << "val: " << val << std::endl;
     }
 
+    std::cout << "size, val : " << s.size << "; " << val <<std::endl;
+
     values.push_back(val);
+
+
+  //  bigval += val;
   }
+
+
+
+  std::cout<<std::fixed<<"VAL: "<< values.at(0) << std::endl; 
+
+ // std::cout<<std::fixed<<"val size: "<< values.size() << std::endl;
+
+
+  //exit(0);
 
   // create mod sum
 
-  int result = 0;
+  //unsigned long result = 0;
+
+  long double result = 0;
 
   for (auto& v : values) {
-    int k = static_cast<int>(v);
-    std::cout << "k: " << k << std::endl;
-    result += (k % 37);
+    //int k = static_cast<int>(v);
+    //std::cout << "k: " << k << std::endl;
+    //result += (k % 37);
+    
+    std::cout << "mod res: " << std::fmod(v,37.0) << " v: " << v<<std::endl;
+
+    result += std::fmod(v,37.0);
+  
   }
 
-  result %= 37;
+  //result %= 37;
+
+  std::cout << "mod res ibetween: " << result << std::endl;
+
+  result = std::fmod(result, 37.0);
 
   std::cout << "res: " << result << std::endl;
 
+
+  int k = static_cast<int>(result);
+
+  //exit(0);
+
   // get checksum character  
   
-  return encode_symbols[result];
+  return encode_symbols[k];
   
+//return 'd';
 }
 
 
