@@ -8,6 +8,64 @@
 #include <vector>
 #include <cmath>
 
+#include <float.h>
+
+// DBL_MAX         = 1.79769e+308
+// DBL_MAX         = 179769000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+
+// 64 unsigned max = 18446744073709551615
+
+// SAFE ?
+
+
+/*
+char: 0 num: 48
+char: 1 num: 49
+char: 2 num: 50
+char: 3 num: 51
+char: 4 num: 52
+char: 5 num: 53
+char: 6 num: 54
+char: 7 num: 55
+char: 8 num: 56
+char: 9 num: 57
+
+char: A num: 65
+char: B num: 66
+char: C num: 67
+char: D num: 68
+char: E num: 69
+char: F num: 70
+char: G num: 71
+char: H num: 72
+
+char: J num: 74
+char: K num: 75
+
+char: M num: 77
+char: N num: 78
+
+char: P num: 80
+char: Q num: 81
+char: R num: 82
+char: S num: 83
+char: T num: 84
+
+char: V num: 86
+char: W num: 87
+char: X num: 88
+char: Y num: 89
+char: Z num: 90
+
+char: * num: 42
+char: ~ num: 126
+char: $ num: 36
+char: = num: 61
+char: U num: 85
+
+*/
+
+
 // TODO: Enforce correct input characters to prevent errors
 
 // valid for encode: all ?
@@ -21,89 +79,43 @@
 
 // TODO: should checksum be recognized automatically?
 
+
+//throw std::invalid_argument("Invalid checksum.");
+
 int main() {
 
-
-  //std::string d = "0100110001101001011001010110001001100101010010110100101101001011";
-   
-  //std::cout << std::stoul(d, NULL, 2) % 37 << std::endl;
-
-  //std::cout << std::numeric_limits<unsigned long>::max() << std::endl;
-
-  //std::cout << std::numeric_limits<unsigned int>::max() << std::endl;
-
-  //exit(1);
-  
-  std::string fif = "110010";
-
-  //std::cout << std::stoul(fif, NULL, 2) % 37 << std::endl; 
-
-  //std::cout << encode_symbols[13] << std::endl;
-
-      //  std::cout << create_checksum("tree") << std::endl;  // G
-
-      // std::cout << create_checksum2("tree") << std::endl;  // G
-
-
-
+ // std::cout << DBL_MAX << std::endl;
 
   //std::cout << ( ( (20 % 37) + (30 % 37)) % 37  ) << std::endl;
 
   // (a + b) mod x = ( (a mod x) + (b mod x) ) mod x
 
-  /*
-  new checksum algo:
 
-
-  - count binary digits 
-
-  - divide into (64, 32, 16, 8) increments
-
-  - calculate values 
-  
-  - create mod sum
-
-  - get checksum character  
-  
-  
-  
-  */
-
-//9HMPARK59N6Q6S3KC5J62S0 =
-
-//9HMPARK59N6Q6S3KC5J62S0 E
-
-  std::string rr = "LiebeMMsdsadad";
-      //std::string rr = "Auto4r";
-  
-  std::string res = encode(rr, true);  
-                                                                        // 9HMPARK59N6Q6S3KC5J62S0
+ // 9HMPARK59N6Q6S3KC5J62S0
     // std::string res2 = encode(rr, true); // 85TQ8VSME8H                   // works with 'false' => 9HMPARK59N6Q6S3KC5J62S0
                                                                         // true => 9HMPARK59N6Q6S3KC5J62S0= (works not)
-  std::cout << res << std::endl;
 
-      //std::cout << res2 << std::endl;
+  //std::string rr = "LiebeMMsdsadad";
+  //std::string rr = "Auto4randwkjandndawjdknadwMMMMM";
+  std::string rr = "Auto4randwkjandndawjdknadwMMMMMNNSddadodnjAJADNALDWNALDNALDNADLANDADNLADNAJDKadadamcac";
 
-  //std::string m = "9HMPARK59N6Q6S3KC5J62S0=";
+  std::string rr2 = "Liebe*";
+  
+  std::string rr3 = "9HMPARK59N6Q6S3KC5J62S0=";
 
-  //std::string tt = decode(m, true);
+  std::string rr4 = "9HMPARK";
+  
+
+        //std::string res = encode(rr, true);  
+                                                                       
+        //std::cout << res << std::endl;
 
 
-
-  //std::string tt = decode(res, false);
-  //std::cout << tt << std::endl;
+  std::string tt = decode(rr2, true);
+  std::cout << tt << std::endl;
   
    //std::string tt2 = decode(res2, true);
    //std::cout << tt2 << std::endl;
-  
-
-  // 0100110001101001011001010110001001100101010011010100110101110011011001000111001101100001011001000110000101100100
-
- // std::string tt3 = "LiebeMMsdsadad";
- // std::cout << create_checksum(tt3) << std::endl;
-  
-
-
 
 
   /*
@@ -119,6 +131,38 @@ int main() {
   
 
   return 0;
+}
+
+bool validate_decode_input(std::string input, bool checksum) {
+
+  int input_len;
+
+  if (checksum == true) {
+    input_len = input.length() - 1;
+  } else {
+    input_len = input.length();
+  }
+
+  for (int i = 0; i < input_len; i++) {
+    int c = ((int)input.at(i));
+    std::cout << "c: " << input.at(i) << std::endl;
+
+    std::cout << "i: " << i << std::endl;
+    if ((c < 48) || (c > 57 && c < 65) || (c > 72 && c < 74) || (c > 75 && c < 77) || (c > 78 && c < 80) || (c > 84 && c < 86) || (c > 90)) {
+      return false;
+    }
+  }
+
+  if (checksum == true) {
+    int j = ((int)input.at(input_len));
+    std::cout << input_len << std::endl;
+    if ( (j < 36) || (j > 36 && j < 42) || (j > 42 && j < 48) || (j > 57 && j < 61) || (j > 61 && j < 65) || (j > 65 && j < 72) || (j > 72 && j < 74) || (j > 75 && j < 77) || (j > 78 && j < 80) || (j > 90 && j < 126) && (j > 126)) {
+      return false;
+    }
+  }
+
+  return true;
+
 }
 
 
@@ -197,12 +241,8 @@ std::string encode(std::string input, bool checksum) {
     result += encode_symbols[strtoull(sub, NULL, 2)];
     bits_start += 5;
   }
-
-  std::cout << "res: " << result << std::endl;
-
   
   if(checksum) {
-    std::cout << "HEYYYY 1" << std::endl;
     check_sum = create_checksum(input);
     result.append(1,check_sum);
   }
@@ -212,6 +252,15 @@ std::string encode(std::string input, bool checksum) {
 
 
 std::string decode(std::string input, bool checksum) {   
+
+
+  if (!validate_decode_input(input, checksum)){
+    throw std::invalid_argument("Invalid input character for decoding.");
+  }
+
+
+  exit(0);    // TODO: remove
+
   char check_sum;
 
   if(checksum) {
@@ -271,15 +320,11 @@ std::string decode(std::string input, bool checksum) {
     }
   }
   
-  // IMPROVE SOLUTION FOR CHECKSUM
   if(checksum) { 
     if(validate_checksum(result,check_sum)) {
       return result;
     } else {
-      std::cout << "ELSE" << std::endl;
       return NULL;
-
-      //throw std::invalid_argument("Invalid checksum.");
     }
   }
 
@@ -298,36 +343,11 @@ void augment_decode_bits(std::string* input) {
   }
 };
 
-// error for wrong symbol
-char create_checksum2(std::string input) {
-  //std::cout << "input: " << input << std::endl;
-
-  std::string input_bin = "";
-  short len = input.length();
-  for(short i = 0; i < len; i++) {
-    input_bin += char_to_bin(input[i]);
-  }
-
-  std::cout << "bin: " << input_bin << std::endl;
-
-  // -- ok -- 
-
-  //std::cout << "in: " << std::stoul(input_bin, NULL, 2) << std::endl;   // stoul
-
-  std::cout << "res chk 1: " << std::stoul(input_bin, NULL, 2) % 37 << std::endl;
-
-
-  return encode_symbols[(std::stoul(input_bin, NULL, 2) % 37)];
-  
-}
-
-
 char create_checksum(std::string input) {
 
   std::vector<binary_segment> segments;
   std::vector<long double> values;
   int covered = 0;
-  
 
   // count binary digits 
 
@@ -340,16 +360,7 @@ char create_checksum(std::string input) {
   int binary_len = input_bin.length();
   int remaining = binary_len;
 
-  std::cout << "bin: " << input_bin << std::endl;
-
-  std::cout << "bin: " << binary_len << std::endl;
-
-  //int len = input.length();
-
   // divide into (64, 32, 16, 8) increments
-
-  std::cout << " " << std::endl;
-
 
   while(covered < binary_len) {
 
@@ -360,34 +371,15 @@ char create_checksum(std::string input) {
       seg.index = covered;
       seg.largest_exponent = binary_len - covered - 1;
 
-
-      std::cout << "--CALC-- 64" << std::endl;
-      std::cout << "covered: " << covered << std::endl;
-      std::cout << "largest expo: " << seg.largest_exponent<< std::endl;
-      std::cout << "index: " << seg.index<< std::endl;
-      std::cout << " " << std::endl;
-
     } else if (remaining >=  four_bytes) {
       seg.size = four_bytes;
       seg.index = covered;
       seg.largest_exponent = binary_len - covered - 1;
 
-      std::cout << "--CALC-- 32" << std::endl;
-      std::cout << "covered: " << covered << std::endl;
-      std::cout << "largest expo: " << seg.largest_exponent<< std::endl;
-      std::cout << "index: " << seg.index<< std::endl;
-      std::cout << " " << std::endl;
-
     } else if (remaining >= two_bytes) {
       seg.size = two_bytes;
       seg.index = covered;
       seg.largest_exponent = binary_len - covered - 1;
-
-      std::cout << "--CALC-- 16" << std::endl;
-      std::cout << "covered: " << covered << std::endl;
-      std::cout << "largest expo: " << seg.largest_exponent<< std::endl;
-      std::cout << "index: " << seg.index<< std::endl;
-      std::cout << " " << std::endl;
 
     } else {
       seg.size = one_byte;
@@ -398,15 +390,9 @@ char create_checksum(std::string input) {
     covered += seg.size;
     segments.push_back(seg);
     remaining = binary_len - covered;
-    std::cout << "rem: : " << remaining << std::endl;
-
   }
 
-//  std::cout << input_bin << std::endl;
-
   // calculate values 
-
-//  long double bigval = 0;
 
   for (auto& s : segments) {
 
@@ -414,90 +400,37 @@ char create_checksum(std::string input) {
     double exp = (double) s.largest_exponent;
     int index = s.index;
 
-/*
-    std::cout << " " << std::endl;
-    std::cout << "size: " << s.size << std::endl;
-    std::cout << "exp: " << exp << std::endl;
-    std::cout << "index: " << index << std::endl;
-
-    std::cout << " " << std::endl;
-*/
-
-
-    for(int j = s.size; j > 0; j--) {
+  for(int j = s.size; j > 0; j--) {
       char c = input_bin.at(index);
       int i = c - '0';            // https://stackoverflow.com/questions/439573/how-to-convert-a-single-char-into-an-int
       if (i == 1){
         val += (std::pow(2, exp));
       }
 
-/*
-      std::cout << "exp: " << exp << std::endl;
-      std::cout << "index: " << index << std::endl;
-      std::cout << std::fixed << "val: " << val << std::endl;
-      
-*/
-
       index++;
       exp--;
 
- 
-      //std::cout << "exp: " << exp << std::endl;
-      //std::cout << "val: " << val << std::endl;
     }
-
-    std::cout << "size, val : " << s.size << "; " << val <<std::endl;
 
     values.push_back(val);
 
-
-  //  bigval += val;
   }
 
-
-
-  std::cout<<std::fixed<<"VAL: "<< values.at(0) << std::endl; 
-
- // std::cout<<std::fixed<<"val size: "<< values.size() << std::endl;
-
-
-  //exit(0);
-
   // create mod sum
-
-  //unsigned long result = 0;
 
   long double result = 0;
 
   for (auto& v : values) {
-    //int k = static_cast<int>(v);
-    //std::cout << "k: " << k << std::endl;
-    //result += (k % 37);
-    
-    std::cout << "mod res: " << std::fmod(v,37.0) << " v: " << v<<std::endl;
-
-    result += std::fmod(v,37.0);
-  
+    result += std::fmod(v,37.0);  
   }
 
-  //result %= 37;
-
-  std::cout << "mod res ibetween: " << result << std::endl;
-
   result = std::fmod(result, 37.0);
-
-  std::cout << "res: " << result << std::endl;
-
-
   int k = static_cast<int>(result);
-
-  //exit(0);
 
   // get checksum character  
   
   return encode_symbols[k];
   
-//return 'd';
 }
 
 
