@@ -5,19 +5,13 @@
 
 std::string char_to_bin(char str);
 std::string char_to_bin(short val);
-std::string encode(std::string input, bool checksum = true);
-std::string decode(std::string input, bool checksum = true);
+std::string encode(std::string input, bool checksum=false);
+std::string decode(std::string input, bool checksum=false);
 char create_checksum(std::string input);
 void augment_encode_bits(std::string* input);
 void augment_decode_bits(std::string* input);
 bool validate_checksum(std::string input, char checksum);
-
-char create_checksum2(std::string input); // remove
-
-// 0 - 31  => encoding 
-// 32 - 36 => checksum
-
-// TODO: separate last 5 in different or validation ?
+bool validate_decode_input(std::string input, bool checksum=false);
 
 enum segment_size {
   one_byte = 8,
@@ -29,10 +23,9 @@ enum segment_size {
 
 struct binary_segment {
   segment_size size;
-  int largest_exponent;     // use short?
+  int largest_exponent;     
   int index;
 };
-
 
 inline char encode_symbols[37] = {
 
