@@ -12,9 +12,27 @@ void augment_encode_bits(std::string* input);
 void augment_decode_bits(std::string* input);
 bool validate_checksum(std::string input, char checksum);
 
+char create_checksum2(std::string input); // remove
 
 // 0 - 31  => encoding 
 // 32 - 36 => checksum
+
+// TODO: separate last 5 in different or validation ?
+
+enum segment_size {
+  one_byte = 8,
+  two_bytes = 16,
+  four_bytes = 32,
+  eight_bytes = 64
+
+};
+
+struct binary_segment {
+  segment_size size;
+  int largest_exponent;     // use short?
+  int index;
+};
+
 
 inline char encode_symbols[37] = {
 
