@@ -18,8 +18,6 @@ bool validate_decode_input(std::string input, bool checksum) {
 
   for (int i = 0; i < input_len; i++) {
     int c = ((int)input.at(i));
-    //std::cout << "c: " << input.at(i) << std::endl;
-    //std::cout << "i: " << i << std::endl;
     if ((c < 48) || (c > 57 && c < 65) || (c > 72 && c < 74) || (c > 75 && c < 77) || (c > 78 && c < 80) || (c > 84 && c < 86) || (c > 90)) {
       return false;
     }
@@ -27,9 +25,7 @@ bool validate_decode_input(std::string input, bool checksum) {
 
   if (checksum == true) {
     int j = ((int)input.at(input_len));
-    if ( (j < 36) || (j > 36 && j < 42) || (j > 42 && j < 48) || (j > 57 && j < 61) || (j > 61 && j < 65) || (j > 72 && j < 74) || (j > 75 && j < 77) || (j > 78 && j < 80) || (j > 90 && j < 126) && (j > 126)) {
-      std::cout << "CHAR " << input.at(input_len) << std::endl;
-
+    if ( (j < 36) || (j > 36 && j < 42) || (j > 42 && j < 48) || (j > 57 && j < 61) || (j > 61 && j < 65) || (j > 72 && j < 74) || (j > 75 && j < 77) || (j > 78 && j < 80) || (j > 90 && j < 126) || (j > 126)) {
       return false;
     }
   }
@@ -147,7 +143,7 @@ std::string decode(std::string input, bool checksum) {
     
     if(c != '0') {
       decode_val = decode_symbols[c];
-      bin_cache = char_to_bin(decode_val); // return 5-bit binary  
+      bin_cache = char_to_bin(decode_val);        // return 5-bit binary  
       augment_decode_bits(&bin_cache);
       bin += bin_cache;
     } else {
@@ -161,7 +157,6 @@ std::string decode(std::string input, bool checksum) {
   short bin_start = 0;
   unsigned long ds;
   short remain;
-  char ret;
   
   while(bin_start < bin_len) {
     
@@ -180,7 +175,6 @@ std::string decode(std::string input, bool checksum) {
         break;
       }
 
-      ret = (char) ds;
       result.append(1, (char) ds);
       bin_start += remain; 
     }

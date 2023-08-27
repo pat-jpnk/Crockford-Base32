@@ -5,7 +5,6 @@
 #include <iostream>
 
 
-
 TEST_CASE("encode testing") {
   CHECK(encode("Airplane435Kmsss", true) == "85MQ4W3CC5Q6AD1K6N5PTWVKECP");
   CHECK(encode("Airplane435Kmsss", false) == "85MQ4W3CC5Q6AD1K6N5PTWVKEC");
@@ -29,6 +28,7 @@ TEST_CASE("decode testing") {
   CHECK(decode("ADGPWKB9CXTPAV34CN0PRV35DSJ6A$", true) == "SanMigueldeAllende");
 }
 
+// TODO: tests covering all cases
 
 TEST_CASE("decode input validation testing") {
   CHECK(validate_decode_input("0123456789ABCDEFGHJKMNPQRSTVWXYZ*", true) == true);
@@ -41,13 +41,22 @@ TEST_CASE("decode input validation testing") {
   CHECK(validate_decode_input("RSSTVZ421=*", true) == false);
 }
 
-/*
-TEST_CASE("create checksum testing") {
 
+TEST_CASE("create checksum testing") {
+  CHECK(create_checksum("MintTeaisNice") == 'M');
+  CHECK(create_checksum("dandkjandkajndajknda.kjdnadjnadknd.adnadnajanxljanxak.jxan") == 'D');
+  CHECK(create_checksum("4892742843923472934827948729247289493921") == '=');
+  CHECK(create_checksum("TreeBeeSeeWeGleeMe") == 'V');
+  CHECK(create_checksum("Llanfairpwllgwyngyll") == '8');
+  CHECK(create_checksum("Bolshezingereyevo") == 'N');
 }
 
 
 TEST_CASE("validate checksum testing") {
-
+  CHECK(validate_checksum("LalalaMedicalMagicalBridge", '~') == true);
+  CHECK(validate_checksum("LalalaMedicalMagicalBridge", '*') == false);
+  CHECK(validate_checksum("248234204923840920402420", 'U') == true);
+  CHECK(validate_checksum("neemcontactmetmijop", 'W') == true);
+  CHECK(validate_checksum("adnadjnadk;jandjandakjdnakjdnak.jdnakj.dnad.", 'W') == true);
+  CHECK(validate_checksum("adnadjnadk;jandjandakjdnakjdnak.jdnakj.dnad.", '=') == false);
 }
-*/
